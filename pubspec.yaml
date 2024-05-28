@@ -37,7 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.6
   http: ^1.2.1
   flutter_typeahead: ^5.2.0
-  google_fonts: ^6.2.0
 
 dev_dependencies:
   flutter_test:
@@ -62,8 +61,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/icons/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -78,11 +77,10 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: Aleo
+      fonts:
+        - asset: fonts/Aleo-VariableFont_wght.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
