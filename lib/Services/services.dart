@@ -17,7 +17,7 @@ class WeatherService {
   }
 
   Future<Map<String, dynamic>> fetch7DaysForecast(String city) async {
-    final url = '$searchBaseUrl?key=$apiKey&q=$city&days=7&api=no&alerts=no';
+    final url = '$forecastBaseUrl?key=$apiKey&q=$city&days=7&api=no&alerts=no';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       return json.decode(response.body);
