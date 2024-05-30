@@ -2,20 +2,26 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:weather_apps/7days_Forecast_Screen.dart';
 import 'package:weather_apps/Search_Page.dart';
 import 'Services/services.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+
+void main() async {
+
   runApp(const MyApp());
+
 }
+
+String maincityName = "Feni";
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MyHomePage(),
@@ -34,7 +40,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final WeatherService weatherService = WeatherService();
-  String city = "Feni";
+
   Map<String, dynamic>? currentWeather;
 
   @override
@@ -45,7 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> fetchWeather() async {
     try {
-      final weatherData = await weatherService.fetchCurrentWeather(city);
+      final weatherData =
+          await weatherService.fetchCurrentWeather(maincityName);
       setState(() {
         currentWeather = weatherData;
       });
@@ -105,9 +112,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       InkWell(
-
                         onTap: () {
-                           Navigator.push(
+                          Navigator.push(
                               context,
                               CupertinoPageRoute(
                                 builder: (context) => const SearchPage(),
@@ -118,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             Icon(Icons.location_on_outlined,
                                 size: 20, color: Colors.grey.shade600),
                             const SizedBox(width: 1),
-                            Text(city,
+                            Text(maincityName,
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.grey.shade600,
@@ -247,14 +253,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                 style: const TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black),
+                                    color: Colors.grey),
                               ),
                               Text(
                                 "Min: ${currentWeather!['forecast']['forecastday'][0]['day']['mintemp_c'].round()} °C",
                                 style: const TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black),
+                                    color: Colors.grey),
                               ),
                             ],
                           ),
@@ -358,12 +364,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                 height: 60,
                                 minWidth: double.infinity,
                                 onPressed: () {
-                                    Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) =>  SevenDaysForecast(city: city,),
-                              ));
-
+                                  Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) =>
+                                            SevenDaysForecast(),
+                                      ));
                                 },
                                 color: Colors.black,
                                 shape: RoundedRectangleBorder(

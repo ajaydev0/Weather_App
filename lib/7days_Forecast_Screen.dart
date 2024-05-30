@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'Services/services.dart';
+import 'main.dart';
 
 class SevenDaysForecast extends StatefulWidget {
-  String city;
-  SevenDaysForecast({required this.city});
+  SevenDaysForecast({super.key});
 
   @override
   State<SevenDaysForecast> createState() => _SevenDaysForecastState();
@@ -25,7 +25,8 @@ class _SevenDaysForecastState extends State<SevenDaysForecast> {
 
   Future<void> fetchForecast() async {
     try {
-      final forecastData = await weatherService.fetch7DaysForecast(widget.city);
+      final forecastData =
+          await weatherService.fetch7DaysForecast(maincityName);
       setState(() {
         forecast = forecastData['forecast']['forecastday'];
       });
@@ -103,7 +104,8 @@ class _SevenDaysForecastState extends State<SevenDaysForecast> {
                       itemBuilder: (context, index) {
                         var data = forecast?[index];
                         return Padding(
-                          padding: const EdgeInsets.only(bottom: 20,left: 10,right: 10),
+                          padding: const EdgeInsets.only(
+                              bottom: 20, left: 10, right: 10),
                           child: Material(
                             elevation: 10,
                             borderRadius: BorderRadius.circular(20),
@@ -118,8 +120,39 @@ class _SevenDaysForecastState extends State<SevenDaysForecast> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
+                                      
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                          padding: const EdgeInsets.only(
+                                                left: 20),
+                                            child: Image.network(
+                                              "https:${data['day']['condition']['icon']}",
+                                              height: 70,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 15),
+                                            child: Container(
+                                              height: 20,
+                                              width: 150,
+                                              // color: Colors.amber,
+                                              child: Text(
+                                                data['day']['condition']['text'],
+                                                style:
+                                                    TextStyle(color: Colors.grey),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 10),
+                                        padding:
+                                            const EdgeInsets.only(right: 10),
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
@@ -146,22 +179,6 @@ class _SevenDaysForecastState extends State<SevenDaysForecast> {
                                           ],
                                         ),
                                       ),
-                                      Column(
-                                        children: [
-                                          Image.network(
-                                            "https:${data['day']['condition']['icon']}",
-                                            height: 70,
-                                          ),
-                                          Padding(
-                                          padding: const EdgeInsets.only(right: 15),
-                                            child: Text(
-                                              data['day']['condition']['text'],
-                                              style:
-                                                  TextStyle(color: Colors.grey),
-                                            ),
-                                          )
-                                        ],
-                                      ),
                                     ],
                                   ),
                                 ),
@@ -178,7 +195,8 @@ class _SevenDaysForecastState extends State<SevenDaysForecast> {
                                             bottomLeft: Radius.circular(10))),
                                     child: Text(
                                       data['date'],
-                                      style: TextStyle(fontSize: 12,color: Colors.white),
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.white),
                                     ),
                                   ),
                                 )
